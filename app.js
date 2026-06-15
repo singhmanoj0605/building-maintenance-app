@@ -1233,13 +1233,17 @@ document.addEventListener('DOMContentLoaded', () => {
   setupListeners();
 
   // Auto-login if session exists
-  const session = getSession();
-  if (session && session.loggedIn) {
-    if (isAllLoaded()) {
-      doShowApp();
-    } else {
-      showLoadingOverlay('Connecting to database…');
-      DB._pendingShow = true;
-    }
+// Auto-login if session exists
+const session = getSession();
+
+if (session && session.loggedIn) {
+  if (isAllLoaded()) {
+    doShowApp();
+  } else {
+    showLoadingOverlay('Connecting to database…');
+    DB._pendingShow = true;
   }
-});
+} else {
+  hideLoadingOverlay();
+  document.getElementById('loginScreen').classList.add('active');
+}
